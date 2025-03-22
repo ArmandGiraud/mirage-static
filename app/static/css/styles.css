@@ -1,0 +1,111 @@
+#cocoSpan {
+    visibility: hidden;
+}
+#buyHireFeatureButton {
+    display: none;
+}
+#buildExpeditionShipButton {
+    display: none;
+}
+#fishBlock {
+    visibility: hidden;
+}
+#respawnCounter {
+    visibility: hidden;
+}
+#hireRobinsonButton {
+    display: none;
+}
+#fishSpan {
+    visibility: hidden;
+}
+#collectFishButton {
+    visibility: hidden;
+}
+#learnFishButton {
+    visibility: hidden;
+}
+#buyLifeCoco {
+    visibility: hidden;
+}
+#activateTradeButton {
+    display: none;
+}
+#tradeBlock {
+    visibility: hidden;
+}
+#buildLadderButton {
+    display: none;
+}
+#buyRespawnButton {
+    display: none;
+}
+#upgrade {
+    display: none;
+}
+#buildFishingRodButton {
+    display: none;
+} 
+#hireCookButton {
+    display: none;
+} 
+#respawnCounter {
+    visibility: hidden;
+}
+#console {
+    position: fixed;
+    border: 5px solid #383737;
+    padding: 10px;
+    height: 50px;
+    overflow-y: scroll;
+    background-color: #000000;
+    color: #ffffff;
+    margin-bottom: 5px;
+    font-weight: bold;
+    font-size: 12px;
+    font-family: 'JetBrains Mono';
+}
+#lifeblink{
+    animation: none;
+}
+@keyframes blinkingText{
+    0%{     color: #000;    }
+    49%{    color: #000; }
+    60%{    color: transparent; }
+    99%{    color:transparent;  }
+    100%{   color: #000;    }
+}
+.upgrades {
+    display: flex;
+    display: none;
+}
+.upgrades2 {
+    display: flex;
+    display: none;
+}
+.fleft {
+    margin-top: 70px; 
+    float:left; 
+    width: 40%;
+    background:rgb(255, 255, 255);
+    height: 400px;
+}
+.fleft h1 {
+    margin-top: 10px; /* Reduce this value */
+}
+
+.fright {
+    margin-top: 60px; 
+    float: right;
+    background:rgb(255, 255, 255);
+    height: 400px;
+    width: 60%;
+}
+.fright h1 {
+    margin-top: 10; /* Reduce this value */
+    visibility: "visible";
+}
+.side-by-side-button {
+    display: flex;
+    margin-right: 3px; /* Optional: Adds some space between the buttons */
+}

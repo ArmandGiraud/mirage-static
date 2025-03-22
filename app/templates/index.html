@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirage</title>
+        <!-- Add icon link -->
+    <link rel="icon" href="https://images.emojiterra.com/twitter/v13.1/512px/1f965.png" type="image/x-icon">
+    <script type="module" src="../static/js/index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2"></script>
+    <script src="https://unpkg.com/tippy.js@6"></script>
+    <script src='https://cdn.plot.ly/plotly-3.0.0.min.js'></script>
+    <link href='https://fonts.googleapis.com/css?family=JetBrains+Mono' rel='stylesheet'>
+    <link rel="stylesheet" href="../static/css/styles.css">
+</head>
+<body>
+    <div id="console"></div>
+    <div class="fleft">
+        <h1>Mirage Island 🏝️</h1>
+        <button id="collectCocoButton" onclick="collectCoco()">Collect Coconut 🥥</button>
+        <button id="collectFishButton" onclick="collectFish()">Collect Fish 🐟</button>
+        <button id="learnFishButton" onclick="learnToFish()">Learn to Fish (cost 10 🥥)</button>
+            <div id="cocoSpan">Collecting Coco: 
+                <progress id="cocoProgress" value="0" max="100"></progress>
+            </div>
+            <div id="fishSpan" class="fishElement">Collecting Fish: 
+                <progress id="fishProgress" value="0" max="100"></progress>
+                <span id="robinsonTimer" style="visibility: hidden;">00:10</span>
+            </div>
+
+                <H3 style="margin-bottom: 5px;">Stocks 🧺</H3>
+                <div>Coconuts Stock: <span id="nbCoco">12</span></div>
+                <div style="display: none;" class="fishElement">Fish Stock: <span id="nbFish" >0</span></div>
+
+            <div class="side-by-side-button" style="margin-top: 5px;">
+                <button id="eatCocoButton" disabled class="side-by-side-button" onclick="eatCoconut()">Eat Coconut</button>
+                <button id="eatFishButton" class="fishElement side-by-side-button" style="display: none;" onclick="eatFish()">Eat Fish</button>
+            </div>
+        <p>
+            <span id="lifeblink">
+                Life: <span id="lifeString"> 100 </span>
+            </span>
+                 <progress id="life" value="100" max="100"></progress>
+                 <span id="respawnCounter">Respawn: 0</span>
+        </p>
+        <button id="activateTradeButton" onclick="activateTrade()">Activate Trade with Robinson (Cost 5🐟)</button>
+        <button id="buyLifeCoco" style ='margin-bottom: 4px;' onclick="buyLife()">Buy more life bar (Price 20 🥥)</button>
+        <div id ="upgradeBlock">
+            <h3 id="upgrade">Upgrades</h3>
+            <div id="upgrades">
+                <button id="buildLadderButton" onclick="buildLadder()">Build Coconut Ladder (time to collect -30%) (Cost 17🥥)</button>
+                <button id="buildFishingRodButton" onclick="buildFishingRod()">Build Fishing Rod (Life restored +6) (Cost 8🐟)</button>
+            </div>
+            <div id="upgrades2">
+                <div style = "display: flex; width: 600px;">
+                    <button id="buyHireFeatureButton" onclick="buyHireFeature()" style="margin-right: 3px;">Buy Hire Robinson Feature (Cost 30 🥥)</button>
+                    <button id="hireRobinsonButton" onclick="hireRobinson()" style="margin-right: 3px;">Hire Robinson (Cost 6 🥥/10 sec)</button>
+                    <span style="display: flex;">
+                        <button id="hireCookButton" style="display: none; margin-right: 3px;" onclick="hireCook()">Hire Cook (Cost 45 🥥)</button>
+                        <span id="cookTimer" style="visibility: hidden;">00:00</span>
+                    </span>
+                </div>
+                <div style = "display: flex; width: 500px;">
+                    <button id="buyRespawnButton" onclick="buyRespawn()" style="margin-right: 3px;">Buy Respawn (Cost 50 🥥)</button>
+                    <button id="buildExpeditionShipButton" onclick="buildExpeditionShip()">Build Expedition Ship⛵ (Cost 100 🥥)</button>
+                </div>
+            </div>
+        </div>
+    
+        <div id="tradeBlock">
+            <h3>Trade with Robinson</h3>
+            <button id="tradeCocoForFishButton" onclick="tradeCocoForFish()">Trade Coco for Fish<br> 2x🥥 => 1x🐟</button>
+            <button id="tradeFishForCocoButton" onclick="tradeFishForCoco()">Trade Fish for coco<br>Price: 1x🐟 = 2x🥥</button>
+        </div>
+    </div>
+    <div class="fright" id="fright">
+        <h1>
+            Ship Expedition Planner⛵
+        </h1>
+        <p>You're embarking on a mission to gather coconuts by building ships. Each expedition targets a specific destination. The number of coconuts you'll collect is random. 
+            You can either build more ships for existing destinations or send ships to new ones.</p>
+        <button id="addNewExpedition" onclick="createExpedition()">Create a new expedition (cost 10🥥)</button>
+        <button id="showExpeditionGraphButton" onclick="unlockExpeditionStats()">Toggle Expedition Statistics</button>
+        <div id="expeditionGraphContainer" style="display: none;">
+            <div class="tabs">
+                <button class="tab-button" onclick="showTab('lineChart')">Line Chart</button>
+                <button class="tab-button" onclick="showTab('barChart')">Bar Chart</button>
+            </div>
+            <div id="lineChart" class="tab-content">
+                <canvas width="120" height="120" id="expeditionLineChart"></canvas>
+            </div>
+            <div id="barChart" class="tab-content" style="display:none;">
+            </div>
+        </div> 
+        <div id="progressBarContainer">
+            <br>
+        </div>
+    </div>
+
+</body>
+</html>
