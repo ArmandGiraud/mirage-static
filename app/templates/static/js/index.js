@@ -21,7 +21,7 @@ function initializeGame() {
     hideElements(['collectFishButton', 'learnFishButton', 'buyLifeCoco',
          'tradeBlock', 'fright']);
     document.getElementById('life').style.width = `${CONFIG.INITIAL_LIFE.WIDTH}px`;
-    logEvent("On your way to your dream vacations, your plane crashed on a deserted Island, now you must survive!");
+    logEvent("On your way to your vacations, your plane crashed on a deserted Island, now you must survive!");
     logEvent("Game started. Collect coconuts to increase your life bar.");
 }
 
