@@ -64,6 +64,7 @@
     font-weight: bold;
     font-size: 12px;
     font-family: 'JetBrains Mono';
+    width: 100%;
 }
 #lifeblink{
     animation: none;

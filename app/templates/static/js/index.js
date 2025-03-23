@@ -3,6 +3,7 @@ import createExpedition  from './bandit.js'
 import CONFIG from './config.js';
 import { updateUIAfterCocoCollection, updateUIAfterFishCollection, shouldDisableBuyLifeButton } from './uiUpdates.js';
 import LifeManager from './lifeManager.js';
+import TradeUtils from './trade.js';
 import { logEvent } from './utils.js';
 import { unlockExpeditionStats } from './stats.js';
 
@@ -195,62 +196,6 @@ function buyLife() {
     logEvent(`Bought more life bar for ${CONFIG.VARIABLES.buyLifePrice}. Total life is now: ${parseFloat(lifeMax)} new price is ${CONFIG.VARIABLES.buyLifePrice}`);
 }
 
-function activateTrade() {
-    let fishCounter = document.getElementById('nbFish');
-    let nbFishes = parseInt(fishCounter.innerText);
-    if (nbFishes < CONFIG.FISH.ACTIVATE_TRADE_COST) {
-        return;
-    }
-    nbFishes -= CONFIG.FISH.ACTIVATE_TRADE_COST;
-    fishCounter.innerText = nbFishes.toString();
-    updateUIAfterFishCollection(nbFishes)
-    document.getElementById('activateTradeButton').style.display = "none";
-    document.getElementById('tradeBlock').style.visibility = "visible";
-    CONFIG.VARIABLES.tradeActivated = true;
-    logEvent("Activated trade with Robinson. You can now trade coconuts for fish and fish for coconuts.");
-    logEvent(`Next update after ${CONFIG.TRADE_NUMBER_MIN} trades.`);
-}
-
-function tradeCocoForFish() {
-    let cocoCounter = document.getElementById('nbCoco');
-    let nbCoco = parseInt(cocoCounter.innerText)
-    // check if we have enough coconuts
-    if (nbCoco < CONFIG.COCO.TRADE_COST) {
-        logEvent("Not enough Coco")
-        return;
-    }
-
-    let fishCounter = document.getElementById('nbFish');
-    let nbFishes = parseInt(fishCounter.innerText);
-    fishCounter.innerText = nbFishes + CONFIG.COCO.TRADE_REWARD;
-    cocoCounter.innerText = nbCoco - CONFIG.COCO.TRADE_COST;
-    updateUIAfterFishCollection(fishCounter.innerText);
-    updateUIAfterCocoCollection(cocoCounter.innerText);
-    CONFIG.VARIABLES.tradeCount++;
-    checkLadderUnlock();
-    logEvent("Traded coco for fish.");
-}
-
-function tradeFishForCoco() {
-    let fishCounter = document.getElementById('nbFish');
-    let nbFishes = parseInt(fishCounter.innerText)
-    // check if we have enough coconuts
-    if (nbFishes < CONFIG.FISH.TRADE_COST) {
-        logEvent("not enough fish")
-        return;
-    }
-
-    let cocoCounter = document.getElementById('nbCoco');
-    let nbCoco = parseInt(cocoCounter.innerText);
-    cocoCounter.innerText = nbCoco + CONFIG.FISH.TRADE_REWARD;
-    fishCounter.innerText = nbFishes - CONFIG.FISH.TRADE_COST;
-    updateUIAfterFishCollection(fishCounter.innerText);
-    updateUIAfterCocoCollection(cocoCounter.innerText);
-    CONFIG.VARIABLES.tradeCount++;
-    checkLadderUnlock();
-    logEvent("Traded fish for coco.");
-}
-
 function buildLadder() {
     let nbCoco = parseInt(document.getElementById('nbCoco').innerText);
     if (nbCoco < CONFIG.VARIABLES.ladderCost) {
@@ -286,32 +231,6 @@ function buildFishingRod() {
     buildFishingRodButton.innerText = `Build Fishing Rod (Life restored +${CONFIG.FISH.ROD_BONUS}) (Cost ${CONFIG.FISH.ROD_COST}🐟)`
     buildFishingRodButton.disabled = nbFish < CONFIG.FISH.ROD_COST; // Disable the button if not enough resources
     updateUIAfterFishCollection(nbFish);
-}
-
-function checkLadderUnlock() {
-    const buildLadderButton = document.getElementById('buildLadderButton');
-    const buildFishingRodButton = document.getElementById('buildFishingRodButton');
-    const buyRespawnButton = document.getElementById('buyRespawnButton');
-    const upgrade = document.getElementById('upgrade');
-    const buyHireFeatureButton = document.getElementById('buyHireFeatureButton');
-    const buildExpeditionShipButton = document.getElementById('buildExpeditionShipButton');
-    let collectFishButton = document.getElementById('collectFishButton');
-    const hireCookButton = document.getElementById('hireCookButton');
-    if (collectFishButton.style.visibility === "visible" && CONFIG.VARIABLES.tradeCount >= CONFIG.TRADE_NUMBER_MIN) {
-        let nbCoco = document.getElementById("nbCoco").innerText;
-        buildLadderButton.style.display = 'block';
-        buildFishingRodButton.style.display = 'block';
-        upgrade.style.display = "inline";
-        buyRespawnButton.style.display = 'block';
-        buyHireFeatureButton.style.display = 'block';
-        buyHireFeatureButton.disabled = nbCoco < CONFIG.HIRE.FEATURE_COST;
-        buildExpeditionShipButton.style.display = 'block';
-        buyHireFeatureButton.disabled = nbCoco < CONFIG.EXPEDITION.SHIP_COST;
-        hireCookButton.style.display = "flex";
-        logEvent(`Unlocked ladder. You can now build a ladder for ${CONFIG.VARIABLES.ladderCost} 🥥`);
-        logEvent(`Unlocked Fishing Rod. You can now build a Fishing rod for ${CONFIG.FISH.ROD_COST} 🐟`);
-        logEvent(`Unlocked Respawn. You can now buy a respawn for ${CONFIG.RESPAWN.COST} 🥥`);
-    }
 }
 
 function resetGame() {
@@ -541,14 +460,12 @@ window.collectFish = collectFish;
 window.learnToFish = learnToFish;
 window.eatCoconut = eatCoconut;
 window.eatFish = eatFish;
-window.activateTrade = activateTrade;
+window.activateTrade = TradeUtils.activateTrade;
 window.buyLife = buyLife;
 window.buildLadder = buildLadder;
 window.buildFishingRod = buildFishingRod;
 window.buyRespawn = buyRespawn;
 window.hireRobinson = hireRobinson;
-window.tradeCocoForFish = tradeCocoForFish;
-window.tradeFishForCoco = tradeFishForCoco;
 window.createExpedition = createExpedition;
 window.buyHireFeature = buyHireFeature;
 window.buildExpeditionShip = buildExpeditionShip;
@@ -572,12 +489,9 @@ export {
     eatFish,
     increaseLifeBar,
     buyLife,
-    activateTrade,
-    tradeCocoForFish,
-    tradeFishForCoco,
+    TradeUtils,
     buildLadder,
     buildFishingRod,
-    checkLadderUnlock,
     resetGame,
     buyRespawn,
     hireRobinson,

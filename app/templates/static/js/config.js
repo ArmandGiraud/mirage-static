@@ -45,6 +45,7 @@ const CONFIG = {
     LIFE_DECREMENT: 2,
     TRADE_NUMBER_MIN: 5,
     VARIABLES: {
+        tradeButtons: [],
         cocoProgressInterval: 70,
         tradeCount: 0,
         eatenCoco: 0,
@@ -58,7 +59,7 @@ const CONFIG = {
         expeditionCount: 0,
         expeditionStatsUnlocked: false,
         expeditions: [],
-        tradeActivated: false
+        tradeActivated: false,
     }
 };
 

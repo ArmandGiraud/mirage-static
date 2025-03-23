@@ -3,11 +3,13 @@ import CONFIG from './config.js';
 export function updateUIAfterCocoCollection(nbCoco) {
     const buildLadderButton = document.getElementById('buildLadderButton');
     document.getElementById('eatCocoButton').disabled = nbCoco < 1;
+    let learnFishButton = document.getElementById('learnFishButton');
     if (nbCoco > CONFIG.COCO.LEARN_FISH_COST - 1 && document.getElementById('collectFishButton').style.visibility === 'hidden') {
-        document.getElementById('learnFishButton').style.visibility = 'visible';
+        learnFishButton.style.visibility = 'visible';
     }
     shouldDisableBuyLifeButton(nbCoco);
     shouldDisableTradecocoForFishButton(nbCoco);
+    learnFishButton.disabled = nbCoco < CONFIG.COCO.LEARN_FISH_COST;
     document.getElementById('buyRespawnButton').disabled = nbCoco < CONFIG.RESPAWN.COST;
     buildLadderButton.disabled = nbCoco < CONFIG.COCO.LADDER_COST;
     document.getElementById('hireRobinsonButton').disabled = nbCoco < CONFIG.HIRE.ROBINSON_COST;
@@ -18,7 +20,8 @@ export function updateUIAfterCocoCollection(nbCoco) {
     document.getElementById('hireCookButton').disabled = nbCoco < CONFIG.HIRE.UNLOCK_COOK_COST;
     document.getElementById('showExpeditionGraphButton').disabled = nbCoco < CONFIG.UNLOCK_STATS_COST;
     
-    CONFIG.VARIABLES.expeditions.map(expe => disableLaunchExpeditionButton(expe, nbCoco));}
+    CONFIG.VARIABLES.expeditions.map(expe => disableLaunchExpeditionButton(expe, nbCoco));
+}
 
 function disableLaunchExpeditionButton(expedition, nbCoco) {
     let isDisabled = nbCoco < CONFIG.EXPEDITION.COST || expedition.isRunning;
@@ -35,7 +38,12 @@ export function updateUIAfterFishCollection(nbFish) {
     // eat fish button
     document.getElementById('eatFishButton').disabled = nbFish < 1;
     document.getElementById('activateTradeButton').disabled = nbFish < CONFIG.FISH.ACTIVATE_TRADE_COST;
+    CONFIG.VARIABLES.tradeButtons.map(button => disableTradeFishButton(button, nbFish));   
+}
 
+function disableTradeFishButton(button, nbFish) {
+    let multiplier = parseInt(button.innerText);
+    button.disabled = nbFish < CONFIG.FISH.TRADE_COST * multiplier; 
 }
 
 export function shouldDisableBuyLifeButton(nbCoco) {
