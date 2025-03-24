@@ -35,7 +35,8 @@ const CONFIG = {
         IS_COOK_UNLOCKED: false
     },
     RESPAWN: {
-        COST: 50
+        COST: 50,
+        COUNT: 0
     },
     EXPEDITION: {
         SHIP_COST: 100,
@@ -49,7 +50,6 @@ const CONFIG = {
         cocoProgressInterval: 70,
         tradeCount: 0,
         eatenCoco: 0,
-        respawnCount: 0,
         isRobinsonWorking: -1,
         isCookWorking: -1,
         robinsonTimerIntervalId: null,

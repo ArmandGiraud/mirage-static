@@ -1,4 +1,5 @@
 import CONFIG from './config.js';
+import { logEvent } from './utils.js';
 import { updateUIAfterCocoCollection, updateUIAfterFishCollection } from './uiUpdates.js';
 
 class LifeManager {
@@ -8,10 +9,10 @@ class LifeManager {
         life = parseInt(life);
         life -= CONFIG.LIFE_DECREMENT;
         if (life < 0) {
-            if (CONFIG.VARIABLES.respawnCount > 0) {
+            if (CONFIG.RESPAWN.COUNT > 0) {
                 const useRespawn = confirm("You ran out of life! Do you want to use your respawn?");
                 if (useRespawn) {
-                    this.respawn();
+                    LifeManager.respawn();
                     return;
                 }
               }
@@ -27,7 +28,7 @@ class LifeManager {
         document.getElementById('lifeString').innerText = life.toString();
     }
 
-    respawn() {
+    static respawn() {
         let life = document.getElementById('life');
         life.value = life.max;
         document.getElementById('lifeString').innerText = life.max.toString();

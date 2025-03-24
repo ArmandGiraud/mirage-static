@@ -255,21 +255,12 @@ function buyRespawn() {
     nbCoco -= CONFIG.RESPAWN.COST;
     CONFIG.RESPAWN.COST = Math.round(CONFIG.RESPAWN.COST * CONFIG.INFLATION_FACTOR);
     document.getElementById('nbCoco').innerText = nbCoco;
-    CONFIG.VARIABLES.respawnCount++;
+    CONFIG.RESPAWN.COUNT++;
     document.getElementById('buyRespawnButton').innerText = `Buy Respawn (Cost ${CONFIG.RESPAWN.COST} 🥥)`;
     logEvent(`Bought a respawn for ${CONFIG.RESPAWN.COST} coconuts. You can now respawn if you run out of life.`);
-    document.getElementById('respawnCounter').innerText = `Respawn: ${CONFIG.VARIABLES.respawnCount.toString()}`;
+    document.getElementById('respawnCounter').innerText = `Respawn: ${CONFIG.RESPAWN.COUNT.toString()}`;
     document.getElementById('respawnCounter').style.visibility = 'visible';
     updateUIAfterCocoCollection(nbCoco);
-}
-
-function respawn() {
-    let life = document.getElementById('life');
-    life.value = CONFIG.INITIAL_LIFE.VALUE;
-    document.getElementById('lifeString').innerText = INITIAL_LIFE_VALUE.toString();
-    respawnCount--;
-    document.getElementById('respawnCounter').innerText = `Respawn: ${respawnCount.toString()}`; 
-    logEvent("You used your respawn and came back to life with full health!");
 }
 
 function buyHireFeature() {
